@@ -1,0 +1,12 @@
+{
+  "name": "silo-cfw-whitelist",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@netlify/blobs": "10.0.8",
+    "tweetnacl": "1.0.3"
+  }
+}

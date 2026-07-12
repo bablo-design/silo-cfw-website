@@ -1,0 +1,1586 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070a07">
+  <meta name="description" content="الموقع الرسمي لسيرفر SILO CFW Roleplay">
+  <title>SILO CFW Roleplay</title>
+
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="style.css">
+
+  <style id="silo-whitelist-style">
+    /* إصلاح بنية الهيدر في الملف المرفوع */
+    .nav-discord{
+      width:36px;
+      height:36px;
+      padding:0 !important;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 36px;
+      color:#d4af37;
+      border:1px solid rgba(212,175,55,.35);
+      background:rgba(0,0,0,.25);
+      text-decoration:none;
+    }
+
+    .nav-discord svg{
+      width:21px;
+      height:21px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
+    }
+
+    #whitelist{
+      scroll-margin-top:110px;
+    }
+
+    .whitelist-wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:32px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(212,175,55,.34);
+      background:
+        radial-gradient(circle at 90% 0%,rgba(212,175,55,.09),transparent 32%),
+        linear-gradient(145deg,rgba(20,14,7,.98),rgba(6,4,2,.99));
+      box-shadow:0 22px 60px rgba(0,0,0,.45);
+    }
+
+    .whitelist-wrap::before,
+    .whitelist-wrap::after{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:2px;
+      background:#d4af37;
+      box-shadow:0 0 15px rgba(212,175,55,.4);
+    }
+
+    .whitelist-wrap::before{
+      top:0;
+      right:0;
+    }
+
+    .whitelist-wrap::after{
+      bottom:0;
+      left:0;
+    }
+
+    .whitelist-head{
+      display:grid;
+      grid-template-columns:1fr 290px;
+      gap:22px;
+      align-items:center;
+      margin-bottom:28px;
+      padding-bottom:24px;
+      border-bottom:1px solid rgba(212,175,55,.14);
+    }
+
+    .whitelist-kicker{
+      display:block;
+      margin-bottom:8px;
+      color:#d4af37;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:2px;
+    }
+
+    .whitelist-head h3{
+      margin:0 0 8px;
+      color:#f7f3e8;
+      font-size:25px;
+    }
+
+    .whitelist-head p{
+      margin:0;
+      color:#a99e8c;
+      font-size:13px;
+      line-height:1.9;
+    }
+
+    .whitelist-note{
+      padding:15px;
+      color:#d9cfbf;
+      border:1px solid rgba(212,175,55,.24);
+      background:rgba(212,175,55,.055);
+      font-size:12px;
+      line-height:1.8;
+    }
+
+    .whitelist-progress{
+      margin-bottom:22px;
+    }
+
+    .whitelist-progress-info{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:9px;
+      color:#d4af37;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .whitelist-progress-track{
+      height:7px;
+      overflow:hidden;
+      border:1px solid rgba(212,175,55,.15);
+      background:rgba(255,255,255,.04);
+    }
+
+    .whitelist-progress-fill{
+      display:block;
+      width:10%;
+      height:100%;
+      background:linear-gradient(90deg,#8f6815,#d4af37,#f1c75b);
+      box-shadow:0 0 13px rgba(212,175,55,.42);
+      transition:width .28s ease;
+    }
+
+    .whitelist-question{
+      min-height:285px;
+      padding:31px 104px 29px 30px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(212,175,55,.30);
+      background:
+        linear-gradient(115deg,rgba(212,175,55,.08),transparent 42%),
+        linear-gradient(145deg,#171006,#0b0703);
+      animation:wl-in .22s ease;
+    }
+
+    @keyframes wl-in{
+      from{opacity:0;transform:translateY(7px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .whitelist-question::before{
+      content:"";
+      position:absolute;
+      top:22px;
+      bottom:22px;
+      right:91px;
+      width:1px;
+      background:linear-gradient(transparent,rgba(212,175,55,.30),transparent);
+    }
+
+    .whitelist-number{
+      width:55px;
+      position:absolute;
+      top:27px;
+      right:27px;
+      color:#d4af37;
+      font-size:30px;
+      font-weight:950;
+      line-height:1;
+      text-align:center;
+      text-shadow:0 0 16px rgba(212,175,55,.28);
+    }
+
+    .whitelist-question h4{
+      margin:0 0 8px;
+      color:#f1c75b;
+      font-size:18px;
+      line-height:1.8;
+    }
+
+    .whitelist-description{
+      margin:0 0 19px;
+      color:#9d9281;
+      font-size:12px;
+      line-height:1.8;
+    }
+
+    .whitelist-fields{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:15px;
+    }
+
+    .whitelist-field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .whitelist-field.full{
+      grid-column:1/-1;
+    }
+
+    .whitelist-field label{
+      color:#ddd4c5;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .whitelist-input,
+    .whitelist-textarea{
+      width:100%;
+      box-sizing:border-box;
+      padding:13px 14px;
+      color:#f7f3e8;
+      border:1px solid rgba(212,175,55,.25);
+      background:rgba(0,0,0,.36);
+      outline:none;
+      font:inherit;
+      font-size:13px;
+      transition:.2s;
+    }
+
+    .whitelist-input:focus,
+    .whitelist-textarea:focus{
+      border-color:#d4af37;
+      box-shadow:0 0 0 3px rgba(212,175,55,.07);
+      background:rgba(0,0,0,.52);
+    }
+
+    .whitelist-input[readonly]{
+      color:#f1c75b;
+      background:rgba(212,175,55,.055);
+    }
+
+    .whitelist-textarea{
+      min-height:175px;
+      resize:vertical;
+      line-height:1.9;
+    }
+
+    .whitelist-input::placeholder,
+    .whitelist-textarea::placeholder{
+      color:#72695b;
+    }
+
+    .whitelist-help,
+    .whitelist-lines{
+      color:#8e8372;
+      font-size:11px;
+      line-height:1.7;
+    }
+
+    .whitelist-lines{
+      color:#d4af37;
+      text-align:left;
+    }
+
+    .whitelist-error{
+      min-height:21px;
+      margin-top:14px;
+      color:#ff7669;
+      font-size:12px;
+      line-height:1.8;
+    }
+
+    .whitelist-controls{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:19px;
+    }
+
+    .whitelist-btn{
+      min-width:145px;
+      min-height:44px;
+      padding:10px 23px;
+      cursor:pointer;
+      font:inherit;
+      font-weight:900;
+      transition:.2s;
+    }
+
+    .whitelist-prev{
+      color:#d4af37;
+      border:1px solid rgba(212,175,55,.38);
+      background:transparent;
+    }
+
+    .whitelist-next,
+    .whitelist-submit{
+      color:#090603;
+      border:1px solid #d4af37;
+      background:linear-gradient(180deg,#f1c75b,#b9851c);
+    }
+
+    .whitelist-btn:hover{
+      filter:brightness(1.08);
+    }
+
+    .whitelist-btn:disabled{
+      opacity:.35;
+      cursor:not-allowed;
+    }
+
+    .whitelist-review-head,
+    .whitelist-pending{
+      padding:24px;
+      text-align:center;
+      border:1px solid rgba(212,175,55,.27);
+      background:rgba(212,175,55,.05);
+    }
+
+    .whitelist-review-head strong,
+    .whitelist-pending strong{
+      display:block;
+      margin-bottom:8px;
+      color:#f1c75b;
+      font-size:22px;
+    }
+
+    .whitelist-review-head span,
+    .whitelist-pending p{
+      color:#aaa08f;
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .whitelist-review-list{
+      display:grid;
+      gap:12px;
+      margin-top:15px;
+    }
+
+    .whitelist-review-card{
+      padding:22px 85px 22px 22px;
+      position:relative;
+      border:1px solid rgba(212,175,55,.25);
+      background:
+        linear-gradient(110deg,rgba(212,175,55,.065),transparent 42%),
+        linear-gradient(145deg,#171006,#0b0703);
+    }
+
+    .whitelist-review-card::before{
+      content:"";
+      position:absolute;
+      top:17px;
+      bottom:17px;
+      right:69px;
+      width:1px;
+      background:linear-gradient(transparent,rgba(212,175,55,.26),transparent);
+    }
+
+    .whitelist-review-number{
+      position:absolute;
+      top:20px;
+      right:17px;
+      color:#d4af37;
+      font-size:21px;
+      font-weight:950;
+    }
+
+    .whitelist-review-question{
+      margin:0 0 10px;
+      color:#f1c75b;
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .whitelist-review-answer{
+      color:#eee7da;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      font-size:13px;
+      line-height:1.85;
+    }
+
+    .whitelist-review-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:17px;
+    }
+
+    .whitelist-pending{
+      padding:42px 22px;
+    }
+
+    .whitelist-pending-icon{
+      width:70px;
+      height:70px;
+      margin:0 auto 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid #d4af37;
+      border-radius:50%;
+      color:#d4af37;
+      font-size:29px;
+      box-shadow:0 0 25px rgba(212,175,55,.18);
+    }
+
+    .whitelist-status-code{
+      margin-top:14px;
+      color:#d4af37;
+      font-size:12px;
+    }
+
+    @media(max-width:900px){
+      .whitelist-head{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:760px){
+      .whitelist-wrap{
+        padding:20px 14px;
+      }
+
+      .whitelist-question{
+        padding:80px 17px 22px;
+      }
+
+      .whitelist-question::before{
+        top:59px;
+        right:17px;
+        bottom:auto;
+        width:calc(100% - 34px);
+        height:1px;
+        background:linear-gradient(90deg,transparent,rgba(212,175,55,.3),transparent);
+      }
+
+      .whitelist-number{
+        top:19px;
+        right:17px;
+        width:auto;
+        font-size:27px;
+      }
+
+      .whitelist-question h4{
+        font-size:16px;
+      }
+
+      .whitelist-fields{
+        grid-template-columns:1fr;
+      }
+
+      .whitelist-field.full{
+        grid-column:auto;
+      }
+
+      .whitelist-btn{
+        width:50%;
+        min-width:0;
+        padding:10px 8px;
+      }
+
+      .whitelist-review-card{
+        padding:65px 17px 20px;
+      }
+
+      .whitelist-review-card::before{
+        top:51px;
+        right:17px;
+        bottom:auto;
+        width:calc(100% - 34px);
+        height:1px;
+        background:linear-gradient(90deg,transparent,rgba(212,175,55,.26),transparent);
+      }
+
+      .whitelist-review-actions{
+        grid-template-columns:1fr;
+      }
+    }
+  
+    .whitelist-status-pending .whitelist-pending-icon{
+      color:#d4af37;
+      border-color:#d4af37;
+    }
+
+    .whitelist-status-accepted{
+      border-color:rgba(66,202,120,.45);
+      background:rgba(66,202,120,.055);
+    }
+
+    .whitelist-status-accepted .whitelist-pending-icon{
+      color:#42ca78;
+      border-color:#42ca78;
+      box-shadow:0 0 25px rgba(66,202,120,.18);
+    }
+
+    .whitelist-status-accepted strong{
+      color:#72e39d;
+    }
+
+    .whitelist-status-rejected{
+      border-color:rgba(255,105,92,.40);
+      background:rgba(255,105,92,.045);
+    }
+
+    .whitelist-status-rejected .whitelist-pending-icon{
+      color:#ff695c;
+      border-color:#ff695c;
+      box-shadow:0 0 25px rgba(255,105,92,.16);
+    }
+
+    .whitelist-status-rejected strong{
+      color:#ff897e;
+    }
+
+    .whitelist-status-date{
+      margin-top:8px;
+      color:#9e9484;
+      font-size:12px;
+    }
+
+    .whitelist-new-application,
+    .whitelist-refresh-status{
+      margin-top:20px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-row">
+
+      <a class="nav-discord"
+         href="https://discord.gg/dmQSJUFX7v"
+         target="_blank"
+         rel="noopener"
+         aria-label="دخول الديسكورد">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.8 8.1c2.1-.8 4.3-.8 6.4 0M8 16.5c2.6 1 5.4 1 8 0M8.6 12.8h.01M15.4 12.8h.01M7 5.8c-2.5.8-4.1 3.2-4.3 7.7 1 1.8 2.5 3.2 4.2 4.1l1.3-1.9m8.8-9.9c2.5.8 4.1 3.2 4.3 7.7-1 1.8-2.5 3.2-4.2 4.1l-1.3-1.9"/>
+        </svg>
+      </a>
+
+      <button class="menu-toggle"
+              type="button"
+              aria-label="فتح القائمة"
+              aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="القائمة الرئيسية">
+        <a class="active" href="#home">الرئيسية</a>
+        <a href="#updates">التحديثات</a>
+        <a href="#about">عن السيرفر</a>
+        <a href="#rules">القوانين</a>
+
+        <a class="brand" href="#home" aria-label="SILO CFW">
+          <img src="assets/logo.png" alt="SILO CFW">
+        </a>
+
+        <a href="#store">المتجر</a>
+        <a href="#team">الطاقم</a>
+        <a href="#whitelist">تقديم التفعيل</a>
+        <a href="#contact">تواصل معنا</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="home">
+
+    <section class="hero">
+      <div class="hero-shade"></div>
+
+      <div class="container hero-content">
+        <div class="hero-mobile-brand">
+          <img src="assets/logo.png" alt="SILO CFW">
+          <h1>SILO CFW ROLEPLAY</h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="container status-section" aria-label="حالة السيرفر">
+      <div class="status-panel frame-corners">
+
+        <article class="status-card server-status-card">
+          <div class="status-indicator">
+            <span></span>
+            <small>حالة السيرفر</small>
+          </div>
+
+          <strong id="server-status">غير متصل</strong>
+          <em id="server-status-en">OFFLINE</em>
+        </article>
+
+        <article class="status-card">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h7v6H4zM13 4h7v6h-7zM4 14h7v6H4zM13 14h7v6h-7z"/>
+          </svg>
+
+          <div>
+            <small>اسم السيرفر</small>
+            <strong id="server-name">SILO CFW ROLEPLAY</strong>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="13" r="7"/>
+            <path d="M12 9v4l2.6 1.7M9 2h6M12 2v4"/>
+          </svg>
+
+          <div>
+            <small>آخر تحديث</small>
+            <strong id="last-update">--</strong>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 20v-2.1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20M9.5 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM17 8h4M19 6v4"/>
+          </svg>
+
+          <div>
+            <small>عدد اللاعبين</small>
+            <strong>
+              <span id="players">0</span> /
+              <span id="max-players">128</span>
+            </strong>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 5h18v12H3zM8 21h8M12 17v4"/>
+          </svg>
+
+          <div>
+            <small>المنصة</small>
+            <strong>PC</strong>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section container" id="updates">
+      <div class="section-title">
+        <h2>لماذا تختار <span>SILO CFW</span>؟</h2>
+      </div>
+
+      <div class="features-grid">
+
+        <article class="feature-card">
+          <div class="icon">💰</div>
+          <div>
+            <h3>اقتصاد واقعي</h3>
+            <p>نظام اقتصاد متوازن يعتمد على العمل والطلب.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">👥</div>
+          <div>
+            <h3>عصابات وتكتلات</h3>
+            <p>أنشئ عصابتك الخاصة وتحكم بقواعد المدينة.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">💼</div>
+          <div>
+            <h3>وظائف متنوعة</h3>
+            <p>مجموعة واسعة من الوظائف الشرعية وغير الشرعية.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">🚗</div>
+          <div>
+            <h3>سيارات حصرية</h3>
+            <p>مجموعة كبيرة من السيارات الحصرية والمعدلة.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">🏆</div>
+          <div>
+            <h3>فعاليات مستمرة</h3>
+            <p>فعاليات يومية بجوائز قيمة ومميزة.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">🛡️</div>
+          <div>
+            <h3>إدارة محترفة</h3>
+            <p>فريق إدارة متواجد على مدار الساعة لخدمتك.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section container about-rules-grid">
+
+      <article class="about-card about-card-vertical" id="about">
+
+        <div class="about-content">
+          <div class="mini-title">
+            <h2>عن السيرفر</h2>
+          </div>
+
+          <p>
+            SILO CFW هو سيرفر حياة واقعية مبني على أفضل الأنظمة،
+            لتقديم تجربة فريدة من نوعها تركز على الواقعية والتفاعل بين اللاعبين.
+          </p>
+
+          <ul>
+            <li>تحديثات مستمرة ومحتوى جديد</li>
+            <li>حماية ضد الغش والمخالفات</li>
+            <li>دعم فني سريع ومتواصل</li>
+            <li>مجتمع عربي محترم</li>
+          </ul>
+
+          <a class="primary-btn"
+             href="#"
+             data-link="discord"
+             target="_blank"
+             rel="noopener">
+            انضم إلينا الآن
+          </a>
+        </div>
+
+        <img src="assets/about-character.jpg"
+             alt="SILO CFW"
+             class="about-photo">
+
+      </article>
+
+      <article class="rules-card" id="rules">
+
+        <div class="mini-title rules-heading">
+          <div>
+            <h2>قوانين السيرفر</h2>
+            <p>اضغط على أي قانون حتى يظهر الشرح الكامل.</p>
+          </div>
+
+          <button class="toggle-all-rules"
+                  type="button"
+                  id="toggle-all-rules">
+            فتح الكل
+          </button>
+        </div>
+
+        <div class="rules-accordion"
+             id="rules-accordion"
+             aria-live="polite">
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <section class="section container" id="whitelist">
+      <div class="section-title">
+        <h2>تقديم <span>التفعيل</span></h2>
+      </div>
+
+      <div class="whitelist-wrap">
+        <div class="whitelist-head">
+          <div>
+            <span class="whitelist-kicker">SILO CFW WHITELIST</span>
+            <h3>نموذج تقديم الوايت ليست</h3>
+            <p>
+              يظهر سؤال واحد في كل خطوة. أكمل جميع الأسئلة، ثم راجع إجاباتك
+              واضغط على تأكيد الطلب.
+            </p>
+          </div>
+
+          <div class="whitelist-note">
+            يرجى كتابة إجابات واقعية وواضحة. يمكن الرجوع بالسابق وتعديل الإجابات قبل تأكيد الطلب.
+          </div>
+        </div>
+
+        <div class="whitelist-progress">
+          <div class="whitelist-progress-info">
+            <span id="wl-step-text">السؤال 01 من 10</span>
+            <span id="wl-percent">10%</span>
+          </div>
+          <div class="whitelist-progress-track">
+            <span class="whitelist-progress-fill" id="wl-progress-fill"></span>
+          </div>
+        </div>
+
+        <form id="wl-form" novalidate>
+          <div id="wl-question-container"></div>
+
+          <div class="whitelist-controls" id="wl-controls">
+            <button type="button"
+                    class="whitelist-btn whitelist-prev"
+                    id="wl-prev">
+              السابق
+            </button>
+
+            <button type="button"
+                    class="whitelist-btn whitelist-next"
+                    id="wl-next">
+              التالي
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
+<section class="section container hidden-anchor" id="store">
+  <div class="section-title">
+    <h2>متجر SILO CFW</h2>
+  </div>
+
+  <p class="placeholder-text">
+    للحصول على الخرائط والمميزات الحصرية، تفضل بزيارة متجرنا.
+  </p>
+
+  <a class="primary-btn"
+     href="https://op-5map-store.tebex.io/category/fivem-map"
+     target="_blank"
+     rel="noopener">
+    دخول المتجر
+  </a>
+</section>
+
+    <section class="section container hidden-anchor" id="team">
+      <div class="section-title">
+        <h2>الطاقم</h2>
+      </div>
+
+      <p class="placeholder-text">
+        تقدر تضيف أسماء وصور أعضاء الإدارة هنا.
+      </p>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+
+    <div class="container footer-top">
+
+      <div class="footer-item">
+        <span class="footer-icon">🎧</span>
+        <div>
+          <strong>تواصل معنا</strong>
+          <small>للدعم والاستفسارات</small>
+        </div>
+      </div>
+
+      <div class="footer-item footer-status">
+        <span class="status-dot-large"></span>
+        <div>
+          <strong>غير متصل</strong>
+          <small>حالة السيرفر</small>
+        </div>
+      </div>
+
+      <div class="footer-item">
+        <span class="footer-icon">👥</span>
+        <div>
+          <strong>
+            <span id="footer-players">0</span> / 128
+          </strong>
+          <small>عدد اللاعبين</small>
+        </div>
+      </div>
+
+      <a class="footer-item"
+         href="#"
+         data-link="discord"
+         target="_blank"
+         rel="noopener">
+        <span class="footer-icon">🎮</span>
+        <div>
+          <strong>مجتمع الديسكورد</strong>
+          <small>انضم إلى مجتمعنا</small>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="copyright">
+      جميع الحقوق محفوظة © SILO CFW 2026
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script id="silo-whitelist-script">
+  (() => {
+    "use strict";
+
+    const questions = [
+      {
+        number:"01",
+        title:"شرفنا باسمك وعمرك الحقيقيين؟",
+        fields:[
+          {id:"real_name",label:"الاسم الحقيقي",type:"text",placeholder:"مثال: طارق الراوي",required:true},
+          {id:"discord_name",label:"اسم أو معرف الديسكورد",type:"text",placeholder:"مثال: shefo أو Discord ID",required:true},
+          {id:"real_dob",label:"تاريخ الميلاد",type:"date",required:true},
+          {id:"real_age",label:"العمر",type:"number",readonly:true,help:"يُحتسب تلقائياً من تاريخ الميلاد."}
+        ]
+      },
+      {
+        number:"02",
+        title:"اسم الشخصية الأول والأخير وتاريخ ميلادها والمنشأ واللغة الخاصة بالشخصية؟",
+        fields:[
+          {id:"character_name",label:"اسم الشخصية الأول والأخير",type:"text",placeholder:"مثال: بابلو بن شداد",required:true},
+          {id:"character_dob",label:"تاريخ ميلاد الشخصية",type:"date",required:true},
+          {id:"character_age",label:"عمر الشخصية",type:"number",readonly:true},
+          {id:"character_origin",label:"منشأ الشخصية",type:"text",placeholder:"مثال: عراقي من بغداد",required:true},
+          {id:"character_language",label:"لغة أو لهجة الشخصية",type:"text",placeholder:"مثال: العربية باللهجة العراقية",required:true,full:true}
+        ]
+      },
+      {
+        number:"03",
+        title:"ما هي قصة الشخصية؟",
+        description:"يجب أن تكون قصة الشخصية من 7 إلى 15 سطراً. يتم احتساب السطور تلقائياً حتى بدون الضغط على Enter.",
+        fields:[
+          {id:"character_story",label:"قصة الشخصية",type:"textarea",placeholder:"اكتب قصة مترابطة توضّح ماضي الشخصية ودوافعها وأهدافها وكيف وصلت إلى المدينة...",required:true,minVisualLines:7,maxVisualLines:15,full:true}
+        ]
+      },
+      {
+        number:"04",
+        title:"ما هي إيجابيات وسلبيات الشخصية من القصة؟",
+        fields:[
+          {id:"character_positives",label:"الإيجابيات",type:"textarea",placeholder:"مثال: نزيه، مجتهد، يساعد الآخرين...",required:true,full:true},
+          {id:"character_negatives",label:"السلبيات",type:"textarea",placeholder:"مثال: سريع الانفعال، عصبي، متردد...",required:true,full:true}
+        ]
+      },
+      {
+        number:"05",
+        title:"هل لديك خبرة سابقة في تقمص الشخصيات؟ اكتب عنها بالتفصيل.",
+        fields:[
+          {id:"roleplay_experience",label:"إجابتك",type:"textarea",placeholder:"اذكر المدن السابقة والأدوار والشخصيات التي تقمصتها...",required:true,full:true}
+        ]
+      },
+      {
+        number:"06",
+        title:"ما هو سبب رغبتك في دخول المدينة؟",
+        fields:[
+          {id:"join_reason",label:"إجابتك",type:"textarea",placeholder:"اشرح سبب رغبتك وما الذي ستضيفه للرول بلاي...",required:true,full:true}
+        ]
+      },
+      {
+        number:"07",
+        title:"وصلك بريد إلكتروني يخبرك بأن بيتك مرهون للبنك، وفي حال عدم سداد المبلغ سيُعرض في مزاد علني، ولا يمكنك السداد في الوقت المحدد. ما الحل لإنقاذ بيتك؟",
+        fields:[
+          {id:"house_scenario",label:"كيف ستتصرف داخل الرول بلاي؟",type:"textarea",placeholder:"اكتب حلاً منطقياً وواقعياً داخل المدينة...",required:true,full:true}
+        ]
+      },
+      {
+        number:"08",
+        title:"بعد طلبك من أحد مطاعم التوصيل، رأيت موظف المطعم يتعرض للسرقة من شخص يبدو مضطرباً عقلياً. ما العمل؟",
+        fields:[
+          {id:"delivery_scenario",label:"كيف ستتصرف؟",type:"textarea",placeholder:"اشرح خطواتك مع مراعاة سلامة حياتك وحياة الآخرين...",required:true,full:true}
+        ]
+      },
+      {
+        number:"09",
+        title:"اتفقت على بيع مركبتك بمبلغ 15 ألف، لكن المشتري أعطاك مبلغاً أقل بعد نقل الملكية. ماذا ستفعل؟",
+        fields:[
+          {id:"vehicle_scenario",label:"كيف ستتصرف داخل الرول بلاي؟",type:"textarea",placeholder:"وضّح كيف ستحفظ حقك وتستكمل السيناريو بصورة قانونية...",required:true,full:true}
+        ]
+      },
+      {
+        number:"10",
+        title:"أثناء سباق غير قانوني مع أصدقائك بدأت سيارة شرطة ضعيفة بمطاردتكم، وأنت تعلم أن الشرطة تمتلك تقنيات أخرى للوصول إليك. ماذا ستفعل؟",
+        fields:[
+          {id:"race_scenario",label:"كيف ستتصرف؟",type:"textarea",placeholder:"اشرح قرارك وكيف ستكمل السيناريو بصورة واقعية...",required:true,full:true}
+        ]
+      }
+    ];
+
+    const storageKey = "silo_whitelist_application";
+    const submissionKey = "silo_whitelist_submission";
+    let statusTimer = null;
+
+    const container = document.getElementById("wl-question-container");
+    const previousButton = document.getElementById("wl-prev");
+    const nextButton = document.getElementById("wl-next");
+    const controls = document.getElementById("wl-controls");
+    const stepText = document.getElementById("wl-step-text");
+    const percentText = document.getElementById("wl-percent");
+    const progressFill = document.getElementById("wl-progress-fill");
+
+    if(!container || !previousButton || !nextButton) return;
+
+    let currentStep = 0;
+    let answers = {};
+
+    try{
+      answers = JSON.parse(localStorage.getItem(storageKey)) || {};
+    }catch(error){
+      answers = {};
+    }
+
+    function escapeHTML(value){
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function save(){
+      localStorage.setItem(storageKey,JSON.stringify(answers));
+    }
+
+    function calculateAge(dateValue){
+      if(!dateValue) return "";
+
+      const birth = new Date(dateValue + "T00:00:00");
+      if(Number.isNaN(birth.getTime())) return "";
+
+      const now = new Date();
+      let age = now.getFullYear() - birth.getFullYear();
+      const month = now.getMonth() - birth.getMonth();
+
+      if(month < 0 || (month === 0 && now.getDate() < birth.getDate())){
+        age--;
+      }
+
+      return age >= 0 ? String(age) : "";
+    }
+
+    function countVisualLines(textarea){
+      if(!textarea) return 0;
+
+      const styles = window.getComputedStyle(textarea);
+      const mirror = document.createElement("div");
+      const lineHeight = parseFloat(styles.lineHeight) || 24;
+      const paddingTop = parseFloat(styles.paddingTop) || 0;
+      const paddingBottom = parseFloat(styles.paddingBottom) || 0;
+
+      mirror.style.position = "absolute";
+      mirror.style.visibility = "hidden";
+      mirror.style.pointerEvents = "none";
+      mirror.style.zIndex = "-9999";
+      mirror.style.top = "0";
+      mirror.style.left = "-99999px";
+      mirror.style.width = textarea.clientWidth + "px";
+      mirror.style.boxSizing = styles.boxSizing;
+      mirror.style.fontFamily = styles.fontFamily;
+      mirror.style.fontSize = styles.fontSize;
+      mirror.style.fontWeight = styles.fontWeight;
+      mirror.style.fontStyle = styles.fontStyle;
+      mirror.style.letterSpacing = styles.letterSpacing;
+      mirror.style.lineHeight = styles.lineHeight;
+      mirror.style.paddingTop = styles.paddingTop;
+      mirror.style.paddingRight = styles.paddingRight;
+      mirror.style.paddingBottom = styles.paddingBottom;
+      mirror.style.paddingLeft = styles.paddingLeft;
+      mirror.style.borderTopWidth = styles.borderTopWidth;
+      mirror.style.borderRightWidth = styles.borderRightWidth;
+      mirror.style.borderBottomWidth = styles.borderBottomWidth;
+      mirror.style.borderLeftWidth = styles.borderLeftWidth;
+      mirror.style.borderStyle = "solid";
+      mirror.style.whiteSpace = "pre-wrap";
+      mirror.style.overflowWrap = "break-word";
+      mirror.style.wordBreak = "break-word";
+      mirror.style.direction = styles.direction;
+      mirror.textContent = (textarea.value || " ") + "​";
+
+      document.body.appendChild(mirror);
+      const contentHeight = mirror.scrollHeight - paddingTop - paddingBottom;
+      const lines = Math.max(1, Math.round(contentHeight / lineHeight));
+      mirror.remove();
+
+      return lines;
+    }
+
+    function updateVisualLineCounter(fieldId){
+      const textarea = document.getElementById("wl-" + fieldId);
+      const counter = document.getElementById("wl-line-" + fieldId);
+      if(!textarea || !counter) return;
+
+      const field = questions
+        .flatMap(question => question.fields)
+        .find(item => item.id === fieldId);
+
+      const lines = countVisualLines(textarea);
+      counter.textContent = `عدد السطور المحتسبة تلقائياً: ${lines}`;
+
+      if(field && field.minVisualLines && lines < field.minVisualLines){
+        counter.textContent += ` — المطلوب من ${field.minVisualLines} إلى ${field.maxVisualLines}`;
+      }else if(field && field.maxVisualLines && lines > field.maxVisualLines){
+        counter.textContent += ` — تجاوزت الحد الأعلى ${field.maxVisualLines}`;
+      }
+    }
+
+    function fieldHTML(field){
+      const value = escapeHTML(answers[field.id] || "");
+      const full = field.full ? " full" : "";
+      const readonly = field.readonly ? " readonly" : "";
+
+      const control = field.type === "textarea"
+        ? `<textarea class="whitelist-textarea"
+                     id="wl-${field.id}"
+                     data-wl-field="${field.id}"
+                     placeholder="${escapeHTML(field.placeholder || "")}">${value}</textarea>`
+        : `<input class="whitelist-input"
+                  id="wl-${field.id}"
+                  data-wl-field="${field.id}"
+                  type="${field.type}"
+                  value="${value}"
+                  placeholder="${escapeHTML(field.placeholder || "")}"
+                  ${readonly}>`;
+
+      const help = field.help
+        ? `<small class="whitelist-help">${escapeHTML(field.help)}</small>`
+        : "";
+      const lineCount = field.minVisualLines
+        ? `<small class="whitelist-lines" id="wl-line-${field.id}">عدد السطور المحتسبة تلقائياً: 1</small>`
+        : "";
+
+      return `
+        <div class="whitelist-field${full}">
+          <label for="wl-${field.id}">${escapeHTML(field.label)}</label>
+          ${control}
+          ${help}
+          ${lineCount}
+        </div>
+      `;
+    }
+
+    function render(){
+      const savedSubmission = loadSubmission();
+
+      if(savedSubmission?.id && savedSubmission?.token){
+        renderApplicationStatus(savedSubmission);
+        return;
+      }
+
+      const question = questions[currentStep];
+
+      container.innerHTML = `
+        <article class="whitelist-question">
+          <div class="whitelist-number">${question.number}</div>
+          <h4>${escapeHTML(question.title)}</h4>
+          ${question.description
+            ? `<p class="whitelist-description">${escapeHTML(question.description)}</p>`
+            : ""}
+          <div class="whitelist-fields">
+            ${question.fields.map(fieldHTML).join("")}
+          </div>
+          <div class="whitelist-error" id="wl-error"></div>
+        </article>
+      `;
+
+      controls.style.display = "flex";
+      bindFields();
+      updateAges();
+      question.fields.forEach(field => updateVisualLineCounter(field.id));
+      updateProgress();
+    }
+
+    function bindFields(){
+      container.querySelectorAll("[data-wl-field]").forEach(element => {
+        const id = element.dataset.wlField;
+
+        const update = () => {
+          answers[id] = element.value;
+          updateAges();
+          updateVisualLineCounter(id);
+          save();
+        };
+
+        element.addEventListener("input",update);
+        element.addEventListener("change",update);
+      });
+    }
+
+    function updateAges(){
+      const realDOB = document.getElementById("wl-real_dob");
+      const realAge = document.getElementById("wl-real_age");
+
+      if(realDOB && realAge){
+        const age = calculateAge(realDOB.value);
+        realAge.value = age;
+        answers.real_age = age;
+      }
+
+      const characterDOB = document.getElementById("wl-character_dob");
+      const characterAge = document.getElementById("wl-character_age");
+
+      if(characterDOB && characterAge){
+        const age = calculateAge(characterDOB.value);
+        characterAge.value = age;
+        answers.character_age = age;
+      }
+
+      save();
+    }
+
+    function updateProgress(){
+      const percent = Math.round(((currentStep + 1) / questions.length) * 100);
+      stepText.textContent = `السؤال ${questions[currentStep].number} من ${questions.length}`;
+      percentText.textContent = percent + "%";
+      progressFill.style.width = percent + "%";
+      previousButton.disabled = currentStep === 0;
+      nextButton.textContent = currentStep === questions.length - 1
+        ? "مراجعة الطلب"
+        : "التالي";
+    }
+
+    function collect(){
+      questions[currentStep].fields.forEach(field => {
+        const element = document.getElementById("wl-" + field.id);
+        if(element){
+          answers[field.id] = element.value.trim();
+        }
+      });
+
+      updateAges();
+      save();
+    }
+    function validate(){
+      collect();
+
+      const question = questions[currentStep];
+      const errorBox = document.getElementById("wl-error");
+      errorBox.textContent = "";
+
+      for(const field of question.fields){
+        const value = String(answers[field.id] || "").trim();
+
+        if(field.required && !value){
+          errorBox.textContent = "يجب كتابة جواب قبل الانتقال للسؤال التالي.";
+          document.getElementById("wl-" + field.id)?.focus();
+          return false;
+        }
+
+        if(field.minVisualLines || field.maxVisualLines){
+          const textarea = document.getElementById("wl-" + field.id);
+          const lines = countVisualLines(textarea);
+
+          if(field.minVisualLines && lines < field.minVisualLines){
+            errorBox.textContent = `قصة الشخصية يجب ألا تقل عن ${field.minVisualLines} سطور. عدد السطور الحالي: ${lines}`;
+            textarea?.focus();
+            return false;
+          }
+
+          if(field.maxVisualLines && lines > field.maxVisualLines){
+            errorBox.textContent = `قصة الشخصية يجب ألا تزيد عن ${field.maxVisualLines} سطراً. عدد السطور الحالي: ${lines}`;
+            textarea?.focus();
+            return false;
+          }
+        }
+      }
+
+      if(currentStep === 0 && Number(answers.real_age) < 18){
+        errorBox.textContent = "العمر المسموح للتقديم هو 18 سنة فما فوق.";
+        return false;
+      }
+
+      return true;
+    }
+
+    function answerFor(number){
+      switch(number){
+        case "01":
+          return `الاسم: ${answers.real_name || ""}\nالديسكورد: ${answers.discord_name || ""}\nتاريخ الميلاد: ${answers.real_dob || ""}\nالعمر: ${answers.real_age || ""}`;
+        case "02":
+          return `الاسم: ${answers.character_name || ""}\nتاريخ الميلاد: ${answers.character_dob || ""}\nالعمر: ${answers.character_age || ""}\nالمنشأ: ${answers.character_origin || ""}\nاللغة أو اللهجة: ${answers.character_language || ""}`;
+        case "03": return answers.character_story || "";
+        case "04": return `الإيجابيات: ${answers.character_positives || ""}\nالسلبيات: ${answers.character_negatives || ""}`;
+        case "05": return answers.roleplay_experience || "";
+        case "06": return answers.join_reason || "";
+        case "07": return answers.house_scenario || "";
+        case "08": return answers.delivery_scenario || "";
+        case "09": return answers.vehicle_scenario || "";
+        case "10": return answers.race_scenario || "";
+        default: return "";
+      }
+    }
+
+    function showReview(){
+      stepText.textContent = "مراجعة الطلب";
+      percentText.textContent = "100%";
+      progressFill.style.width = "100%";
+      controls.style.display = "none";
+
+      container.innerHTML = `
+        <div class="whitelist-review">
+          <div class="whitelist-review-head">
+            <strong>راجع طلبك قبل الإرسال</strong>
+            <span>تأكد من صحة جميع الإجابات ثم اضغط على تأكيد الطلب.</span>
+          </div>
+
+          <div class="whitelist-review-list">
+            ${questions.map(question => `
+              <article class="whitelist-review-card">
+                <div class="whitelist-review-number">${question.number}</div>
+                <h5 class="whitelist-review-question">${escapeHTML(question.title)}</h5>
+                <div class="whitelist-review-answer">${escapeHTML(answerFor(question.number))}</div>
+              </article>
+            `).join("")}
+          </div>
+
+          <div class="whitelist-review-actions">
+            <button type="button"
+                    class="whitelist-btn whitelist-prev"
+                    id="wl-edit">
+              تعديل الإجابات
+            </button>
+
+            <button type="button"
+                    class="whitelist-btn whitelist-submit"
+                    id="wl-confirm">
+              تأكيد الطلب
+            </button>
+          </div>
+
+          <div class="whitelist-error" id="wl-submit-error"></div>
+        </div>
+      `;
+
+      document.getElementById("wl-edit")?.addEventListener("click",() => {
+        currentStep = 0;
+        render();
+      });
+
+      document.getElementById("wl-confirm")?.addEventListener("click",submitApplication);
+    }
+
+    function loadSubmission(){
+      try{
+        return JSON.parse(localStorage.getItem(submissionKey)) || null;
+      }catch(error){
+        return null;
+      }
+    }
+
+    function saveSubmission(submission){
+      localStorage.setItem(submissionKey,JSON.stringify(submission));
+    }
+
+    function stopStatusTimer(){
+      if(statusTimer){
+        clearTimeout(statusTimer);
+        statusTimer = null;
+      }
+    }
+
+    async function submitApplication(){
+      const button = document.getElementById("wl-confirm");
+      const errorBox = document.getElementById("wl-submit-error");
+
+      button.disabled = true;
+      button.textContent = "جاري إرسال الطلب...";
+      errorBox.textContent = "";
+
+      try{
+        const response = await fetch("/.netlify/functions/submit-whitelist",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            submittedAt:new Date().toISOString(),
+            website:location.origin,
+            answers
+          })
+        });
+
+        let data = {};
+        try{
+          data = await response.json();
+        }catch(error){
+          data = {};
+        }
+
+        if(!response.ok || !data.id || !data.token){
+          throw new Error(data.error || "تعذر إرسال الطلب إلى الإدارة.");
+        }
+
+        const submission = {
+          id:data.id,
+          token:data.token,
+          status:"pending",
+          submittedAt:data.submittedAt || new Date().toISOString()
+        };
+
+        saveSubmission(submission);
+        renderApplicationStatus(submission);
+
+      }catch(error){
+        button.disabled = false;
+        button.textContent = "تأكيد الطلب";
+        errorBox.textContent =
+          error?.message || "تعذر إرسال الطلب إلى الإدارة. حاول مرة أخرى.";
+      }
+    }
+
+    function statusText(status){
+      if(status === "accepted"){
+        return {
+          title:"تم قبول طلبك",
+          text:"تمت الموافقة على طلب التفعيل من قبل إدارة SILO CFW.",
+          icon:"✓"
+        };
+      }
+
+      if(status === "rejected"){
+        return {
+          title:"تم رفض طلبك",
+          text:"تم رفض طلب التفعيل من قبل الإدارة. راجع الديسكورد لمعرفة التفاصيل.",
+          icon:"×"
+        };
+      }
+
+      return {
+        title:"طلبك قيد المراجعة",
+        text:"تم إرسال طلبك إلى روم الإدارة في الديسكورد، وسيتم تحديث النتيجة هنا بعد قبول المشرف أو رفضه.",
+        icon:"⌛"
+      };
+    }
+
+    function renderApplicationStatus(submission){
+      stopStatusTimer();
+
+      controls.style.display = "none";
+      stepText.textContent = "حالة الطلب";
+      percentText.textContent = "100%";
+      progressFill.style.width = "100%";
+
+      const details = statusText(submission.status);
+      const finalStatus =
+        submission.status === "accepted" || submission.status === "rejected";
+
+      container.innerHTML = `
+        <div class="whitelist-pending whitelist-status-${escapeHTML(submission.status || "pending")}">
+          <div class="whitelist-pending-icon">${details.icon}</div>
+          <strong>${details.title}</strong>
+          <p>${details.text}</p>
+          <div class="whitelist-status-code">
+            رقم الطلب: ${escapeHTML(submission.id)}
+          </div>
+
+          ${submission.reviewedAt
+            ? `<div class="whitelist-status-date">تاريخ المراجعة: ${new Date(submission.reviewedAt).toLocaleString("ar-IQ")}</div>`
+            : ""}
+
+          ${finalStatus
+            ? `<button type="button"
+                       class="whitelist-btn whitelist-prev whitelist-new-application"
+                       id="wl-new-application">
+                 تقديم طلب جديد
+               </button>`
+            : `<button type="button"
+                       class="whitelist-btn whitelist-prev whitelist-refresh-status"
+                       id="wl-refresh-status">
+                 تحديث حالة الطلب
+               </button>`}
+        </div>
+      `;
+
+      document.getElementById("wl-new-application")?.addEventListener("click",()=>{
+        localStorage.removeItem(submissionKey);
+        localStorage.removeItem(storageKey);
+        answers = {};
+        currentStep = 0;
+        render();
+      });
+
+      document.getElementById("wl-refresh-status")?.addEventListener("click",()=>{
+        refreshApplicationStatus(submission,true);
+      });
+
+      if(!finalStatus){
+        statusTimer = setTimeout(()=>{
+          refreshApplicationStatus(submission,false);
+        },15000);
+      }
+    }
+
+    async function refreshApplicationStatus(submission,showError){
+      const refreshButton = document.getElementById("wl-refresh-status");
+
+      if(refreshButton){
+        refreshButton.disabled = true;
+        refreshButton.textContent = "جاري التحديث...";
+      }
+
+      try{
+        const url =
+          `/.netlify/functions/whitelist-status?id=${encodeURIComponent(submission.id)}&token=${encodeURIComponent(submission.token)}`;
+
+        const response = await fetch(url,{
+          method:"GET",
+          headers:{"Accept":"application/json"},
+          cache:"no-store"
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+          throw new Error(data.error || "تعذر جلب حالة الطلب.");
+        }
+
+        const updatedSubmission = {
+          ...submission,
+          status:data.status || "pending",
+          reviewedAt:data.reviewedAt || null,
+          reviewedBy:data.reviewedBy || null
+        };
+
+        saveSubmission(updatedSubmission);
+        renderApplicationStatus(updatedSubmission);
+
+      }catch(error){
+        if(refreshButton){
+          refreshButton.disabled = false;
+          refreshButton.textContent = "تحديث حالة الطلب";
+        }
+
+        if(showError){
+          const currentText = container.querySelector("p");
+          if(currentText){
+            currentText.textContent =
+              "تعذر تحديث حالة الطلب حالياً. حاول بعد قليل.";
+          }
+        }else{
+          statusTimer = setTimeout(()=>{
+            refreshApplicationStatus(submission,false);
+          },30000);
+        }
+      }
+    }
+
+    nextButton.addEventListener("click",() => {
+      if(!validate()) return;
+
+      if(currentStep < questions.length - 1){
+        currentStep++;
+        render();
+        document.getElementById("whitelist")?.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      }else{
+        showReview();
+      }
+    });
+
+    previousButton.addEventListener("click",() => {
+      collect();
+
+      if(currentStep > 0){
+        currentStep--;
+        render();
+      }
+    });
+
+    window.addEventListener("resize",() => {
+      const story = document.getElementById("wl-character_story");
+      if(story) updateVisualLineCounter("character_story");
+    });
+
+    render();
+  })();
+  </script>
+
+</body>
+</html>
