@@ -64,16 +64,34 @@ function validateAnswers(rawAnswers) {
 }
 
 
-async function ensureApplicantIsGuildMember(discordUserId) {
-  const { guildId } = getDiscordRoleConfig();
+async function ensureApplicantCanApply(discordUserId) {
+  const {
+    guildId,
+    acceptedRoleId,
+  } = getDiscordRoleConfig();
 
   try {
     const result = await discordBotRequest(
       `/guilds/${guildId}/members/${discordUserId}`,
     );
 
+    const roles = new Set(result.data?.roles ?? []);
+
+    if (roles.has(acceptedRoleId)) {
+      const error = new Error(
+        "حسابك حاصل على رتبة مقبول تفعيل مسبقاً، لذلك لا يمكنك تقديم طلب جديد.",
+      );
+
+      error.code = "ALREADY_ACCEPTED";
+      throw error;
+    }
+
     return result.data;
   } catch (error) {
+    if (error?.code === "ALREADY_ACCEPTED") {
+      throw error;
+    }
+
     throw new Error(discordRoleErrorMessage(error));
   }
 }
@@ -162,7 +180,7 @@ export default async (request, context) => {
 
     // يمنع تقديم شخص غير موجود داخل سيرفر الديسكورد،
     // لأن إضافة الرول لا تعمل إلا على عضو موجود داخل السيرفر.
-    await ensureApplicantIsGuildMember(sessionUser.id);
+    await ensureApplicantCanApply(sessionUser.id);
 
     const application = {
       id: createApplicationId(),
