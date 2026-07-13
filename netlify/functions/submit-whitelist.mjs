@@ -1,4 +1,9 @@
 import {
+  getSessionUser,
+  publicDiscordUser,
+} from "./_auth.mjs";
+
+import {
   DISCORD_API,
   buildApplicationText,
   buildReviewComponents,
@@ -12,7 +17,6 @@ import {
 
 const REQUIRED_FIELDS = [
   "real_name",
-  "discord_name",
   "real_dob",
   "real_age",
   "character_name",
@@ -112,9 +116,21 @@ async function sendToDiscord(application) {
   return result;
 }
 
-export default async (request) => {
+export default async (request, context) => {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, 405, { Allow: "POST" });
+  }
+
+  const sessionUser = await getSessionUser(context);
+
+  if (!sessionUser) {
+    return json(
+      {
+        error: "يجب تسجيل الدخول بحساب الديسكورد قبل تقديم الطلب.",
+        loginRequired: true,
+      },
+      401,
+    );
   }
 
   const contentLength = Number(request.headers.get("content-length") || "0");
@@ -135,6 +151,7 @@ export default async (request) => {
       reviewedBy: null,
       discordMessageId: null,
       discordChannelId: process.env.DISCORD_CHANNEL_ID?.trim() || null,
+      discordUser: publicDiscordUser(sessionUser),
       answers,
     };
 

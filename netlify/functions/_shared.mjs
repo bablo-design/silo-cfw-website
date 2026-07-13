@@ -47,7 +47,9 @@ export function buildApplicationText(application) {
     "",
     "01 - المعلومات الحقيقية",
     `الاسم: ${a.real_name ?? ""}`,
-    `الديسكورد: ${a.discord_name ?? ""}`,
+    `حساب الديسكورد: ${application.discordUser?.displayName ?? ""}`,
+    `Discord Username: ${application.discordUser?.username ?? ""}`,
+    `Discord ID: ${application.discordUser?.id ?? ""}`,
     `تاريخ الميلاد: ${a.real_dob ?? ""}`,
     `العمر: ${a.real_age ?? ""}`,
     "",
@@ -112,8 +114,10 @@ export function buildReviewEmbed(application, status = "pending", reviewer = nul
       inline: true,
     },
     {
-      name: "الديسكورد",
-      value: cleanText(a.discord_name, 200) || "غير متوفر",
+      name: "حساب الديسكورد المرتبط",
+      value: application.discordUser?.id
+        ? `<@${application.discordUser.id}>\n${cleanText(application.discordUser.displayName, 100)}\nID: ${cleanText(application.discordUser.id, 30)}`
+        : "غير متوفر",
       inline: true,
     },
     {

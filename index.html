@@ -530,6 +530,137 @@
       margin-top:20px;
     }
 
+  
+    .whitelist-auth-gate{
+      margin-bottom:22px;
+    }
+
+    .whitelist-auth-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:21px;
+      border:1px solid rgba(212,175,55,.30);
+      background:
+        linear-gradient(120deg,rgba(212,175,55,.07),transparent 45%),
+        rgba(0,0,0,.30);
+    }
+
+    .whitelist-auth-content{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      min-width:0;
+    }
+
+    .whitelist-auth-icon,
+    .whitelist-auth-avatar{
+      width:54px;
+      height:54px;
+      flex:0 0 54px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border:1px solid rgba(212,175,55,.42);
+      border-radius:50%;
+      color:#d4af37;
+      background:#0c0804;
+      font-size:24px;
+    }
+
+    .whitelist-auth-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .whitelist-auth-copy{
+      min-width:0;
+    }
+
+    .whitelist-auth-copy strong{
+      display:block;
+      margin-bottom:5px;
+      color:#f1c75b;
+      font-size:16px;
+    }
+
+    .whitelist-auth-copy p{
+      margin:0;
+      color:#a99e8c;
+      font-size:12.5px;
+      line-height:1.75;
+    }
+
+    .whitelist-auth-user{
+      color:#f7f3e8;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .whitelist-auth-id{
+      margin-top:4px;
+      color:#8d8272;
+      font-size:11px;
+      direction:ltr;
+      text-align:right;
+    }
+
+    .whitelist-discord-login{
+      min-width:190px;
+      padding:13px 20px;
+      color:#fff;
+      border:1px solid #7189da;
+      background:#5865f2;
+      text-align:center;
+      text-decoration:none;
+      font-weight:900;
+      transition:.2s;
+    }
+
+    .whitelist-discord-login:hover{
+      filter:brightness(1.1);
+      box-shadow:0 0 22px rgba(88,101,242,.23);
+    }
+
+    .whitelist-discord-logout{
+      min-width:120px;
+      padding:11px 16px;
+      color:#d4af37;
+      border:1px solid rgba(212,175,55,.36);
+      background:transparent;
+      cursor:pointer;
+      font:inherit;
+      font-weight:800;
+    }
+
+    .whitelist-auth-error{
+      color:#ff7669;
+      border-color:rgba(255,118,105,.35);
+      background:rgba(255,118,105,.05);
+    }
+
+    [hidden]{
+      display:none !important;
+    }
+
+    @media(max-width:700px){
+      .whitelist-auth-card{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .whitelist-discord-login,
+      .whitelist-discord-logout{
+        width:100%;
+        box-sizing:border-box;
+      }
+    }
+
   </style>
 
 </head>
@@ -795,33 +926,47 @@
           </div>
         </div>
 
-        <div class="whitelist-progress">
-          <div class="whitelist-progress-info">
-            <span id="wl-step-text">السؤال 01 من 10</span>
-            <span id="wl-percent">10%</span>
-          </div>
-          <div class="whitelist-progress-track">
-            <span class="whitelist-progress-fill" id="wl-progress-fill"></span>
+        <div class="whitelist-auth-gate" id="wl-auth-gate">
+          <div class="whitelist-auth-card">
+            <div class="whitelist-auth-content">
+              <div class="whitelist-auth-icon">⌛</div>
+              <div class="whitelist-auth-copy">
+                <strong>جاري فحص حساب الديسكورد...</strong>
+                <p>انتظر لحظة.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <form id="wl-form" novalidate>
-          <div id="wl-question-container"></div>
-
-          <div class="whitelist-controls" id="wl-controls">
-            <button type="button"
-                    class="whitelist-btn whitelist-prev"
-                    id="wl-prev">
-              السابق
-            </button>
-
-            <button type="button"
-                    class="whitelist-btn whitelist-next"
-                    id="wl-next">
-              التالي
-            </button>
+        <div id="wl-application-area" hidden>
+          <div class="whitelist-progress">
+            <div class="whitelist-progress-info">
+              <span id="wl-step-text">السؤال 01 من 10</span>
+              <span id="wl-percent">10%</span>
+            </div>
+            <div class="whitelist-progress-track">
+              <span class="whitelist-progress-fill" id="wl-progress-fill"></span>
+            </div>
           </div>
-        </form>
+
+          <form id="wl-form" novalidate>
+            <div id="wl-question-container"></div>
+
+            <div class="whitelist-controls" id="wl-controls">
+              <button type="button"
+                      class="whitelist-btn whitelist-prev"
+                      id="wl-prev">
+                السابق
+              </button>
+
+              <button type="button"
+                      class="whitelist-btn whitelist-next"
+                      id="wl-next">
+                التالي
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -917,7 +1062,6 @@
         title:"شرفنا باسمك وعمرك الحقيقيين؟",
         fields:[
           {id:"real_name",label:"الاسم الحقيقي",type:"text",placeholder:"مثال: طارق الراوي",required:true},
-          {id:"discord_name",label:"اسم أو معرف الديسكورد",type:"text",placeholder:"مثال: shefo أو Discord ID",required:true},
           {id:"real_dob",label:"تاريخ الميلاد",type:"date",required:true},
           {id:"real_age",label:"العمر",type:"number",readonly:true,help:"يُحتسب تلقائياً من تاريخ الميلاد."}
         ]
@@ -1004,11 +1148,20 @@
     const stepText = document.getElementById("wl-step-text");
     const percentText = document.getElementById("wl-percent");
     const progressFill = document.getElementById("wl-progress-fill");
+    const authGate = document.getElementById("wl-auth-gate");
+    const applicationArea = document.getElementById("wl-application-area");
 
-    if(!container || !previousButton || !nextButton) return;
+    if(
+      !container ||
+      !previousButton ||
+      !nextButton ||
+      !authGate ||
+      !applicationArea
+    ) return;
 
     let currentStep = 0;
     let answers = {};
+    let discordUser = null;
 
     try{
       answers = JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -1282,7 +1435,7 @@
     function answerFor(number){
       switch(number){
         case "01":
-          return `الاسم: ${answers.real_name || ""}\nالديسكورد: ${answers.discord_name || ""}\nتاريخ الميلاد: ${answers.real_dob || ""}\nالعمر: ${answers.real_age || ""}`;
+          return `الاسم: ${answers.real_name || ""}\nحساب الديسكورد: ${discordUser?.displayName || ""}\nDiscord ID: ${discordUser?.id || ""}\nتاريخ الميلاد: ${answers.real_dob || ""}\nالعمر: ${answers.real_age || ""}`;
         case "02":
           return `الاسم: ${answers.character_name || ""}\nتاريخ الميلاد: ${answers.character_dob || ""}\nالعمر: ${answers.character_age || ""}\nالمنشأ: ${answers.character_origin || ""}\nاللغة أو اللهجة: ${answers.character_language || ""}`;
         case "03": return answers.character_story || "";
@@ -1374,8 +1527,13 @@
       errorBox.textContent = "";
 
       try{
+        if(!discordUser){
+          throw new Error("يجب تسجيل الدخول بحساب الديسكورد أولاً.");
+        }
+
         const response = await fetch("/.netlify/functions/submit-whitelist",{
           method:"POST",
+          credentials:"same-origin",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({
             submittedAt:new Date().toISOString(),
@@ -1391,6 +1549,15 @@
           data = {};
         }
 
+        if(response.status === 401 || data.loginRequired){
+          discordUser = null;
+          applicationArea.hidden = true;
+          renderLoggedOut(
+            "انتهت جلسة الديسكورد. سجّل الدخول مرة ثانية ثم أكمل الطلب."
+          );
+          throw new Error("يجب تسجيل الدخول بحساب الديسكورد.");
+        }
+
         if(!response.ok || !data.id || !data.token){
           throw new Error(data.error || "تعذر إرسال الطلب إلى الإدارة.");
         }
@@ -1399,7 +1566,8 @@
           id:data.id,
           token:data.token,
           status:"pending",
-          submittedAt:data.submittedAt || new Date().toISOString()
+          submittedAt:data.submittedAt || new Date().toISOString(),
+          discordUserId:discordUser.id
         };
 
         saveSubmission(submission);
@@ -1509,11 +1677,21 @@
 
         const response = await fetch(url,{
           method:"GET",
+          credentials:"same-origin",
           headers:{"Accept":"application/json"},
           cache:"no-store"
         });
 
         const data = await response.json();
+
+        if(response.status === 401 || data.loginRequired){
+          discordUser = null;
+          applicationArea.hidden = true;
+          renderLoggedOut(
+            "انتهت جلسة الديسكورد. سجّل الدخول مرة ثانية لمتابعة الطلب."
+          );
+          return;
+        }
 
         if(!response.ok){
           throw new Error(data.error || "تعذر جلب حالة الطلب.");
@@ -1549,6 +1727,141 @@
       }
     }
 
+
+    function authAvatarHTML(user){
+      if(user?.avatarUrl){
+        return `<div class="whitelist-auth-avatar"><img src="${escapeHTML(user.avatarUrl)}" alt="Discord"></div>`;
+      }
+
+      return `<div class="whitelist-auth-icon">🎮</div>`;
+    }
+
+    function renderLoggedOut(message = ""){
+      stopStatusTimer();
+      applicationArea.hidden = true;
+
+      authGate.innerHTML = `
+        <div class="whitelist-auth-card ${message ? "whitelist-auth-error" : ""}">
+          <div class="whitelist-auth-content">
+            <div class="whitelist-auth-icon">🎮</div>
+            <div class="whitelist-auth-copy">
+              <strong>يجب ربط حساب الديسكورد</strong>
+              <p>
+                ${escapeHTML(
+                  message ||
+                  "لا يمكن فتح أسئلة التفعيل أو إرسال الطلب إلا بعد تسجيل الدخول بحساب Discord."
+                )}
+              </p>
+            </div>
+          </div>
+
+          <a class="whitelist-discord-login"
+             href="/.netlify/functions/auth-discord">
+            تسجيل الدخول بديسكورد
+          </a>
+        </div>
+      `;
+    }
+
+    function renderLoggedIn(user){
+      authGate.innerHTML = `
+        <div class="whitelist-auth-card">
+          <div class="whitelist-auth-content">
+            ${authAvatarHTML(user)}
+            <div class="whitelist-auth-copy">
+              <strong>حساب الديسكورد مرتبط</strong>
+              <div class="whitelist-auth-user">
+                ${escapeHTML(user.displayName)}
+                <span dir="ltr">@${escapeHTML(user.username)}</span>
+              </div>
+              <div class="whitelist-auth-id">
+                Discord ID: ${escapeHTML(user.id)}
+              </div>
+            </div>
+          </div>
+
+          <button type="button"
+                  class="whitelist-discord-logout"
+                  id="wl-discord-logout">
+            تسجيل الخروج
+          </button>
+        </div>
+      `;
+
+      document
+        .getElementById("wl-discord-logout")
+        ?.addEventListener("click",logoutDiscord);
+    }
+
+    async function logoutDiscord(){
+      try{
+        await fetch("/.netlify/functions/auth-logout",{
+          method:"POST",
+          credentials:"same-origin"
+        });
+      }catch(error){
+        console.error("Discord logout failed:",error);
+      }
+
+      discordUser = null;
+      localStorage.removeItem(storageKey);
+      localStorage.removeItem(submissionKey);
+      answers = {};
+      renderLoggedOut();
+    }
+
+    async function initializeDiscordLogin(){
+      authGate.innerHTML = `
+        <div class="whitelist-auth-card">
+          <div class="whitelist-auth-content">
+            <div class="whitelist-auth-icon">⌛</div>
+            <div class="whitelist-auth-copy">
+              <strong>جاري فحص حساب الديسكورد...</strong>
+              <p>انتظر لحظة.</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      try{
+        const response = await fetch("/.netlify/functions/auth-me",{
+          method:"GET",
+          credentials:"same-origin",
+          headers:{"Accept":"application/json"},
+          cache:"no-store"
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.authenticated || !data.user){
+          renderLoggedOut();
+          return;
+        }
+
+        discordUser = data.user;
+
+        const savedSubmission = loadSubmission();
+        if(
+          savedSubmission?.discordUserId &&
+          savedSubmission.discordUserId !== discordUser.id
+        ){
+          localStorage.removeItem(submissionKey);
+          localStorage.removeItem(storageKey);
+          answers = {};
+        }
+
+        renderLoggedIn(discordUser);
+        applicationArea.hidden = false;
+        render();
+
+      }catch(error){
+        console.error("Discord auth check failed:",error);
+        renderLoggedOut(
+          "تعذر التحقق من تسجيل الدخول حالياً. حاول تحديث الصفحة."
+        );
+      }
+    }
+
     nextButton.addEventListener("click",() => {
       if(!validate()) return;
 
@@ -1578,7 +1891,7 @@
       if(story) updateVisualLineCounter("character_story");
     });
 
-    render();
+    initializeDiscordLogin();
   })();
   </script>
 
