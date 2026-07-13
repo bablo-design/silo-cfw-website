@@ -11,7 +11,10 @@ import {
   cleanText,
   createApplicantToken,
   createApplicationId,
+  discordBotRequest,
+  discordRoleErrorMessage,
   getApplicationsStore,
+  getDiscordRoleConfig,
   json,
 } from "./_shared.mjs";
 
@@ -58,6 +61,21 @@ function validateAnswers(rawAnswers) {
   }
 
   return answers;
+}
+
+
+async function ensureApplicantIsGuildMember(discordUserId) {
+  const { guildId } = getDiscordRoleConfig();
+
+  try {
+    const result = await discordBotRequest(
+      `/guilds/${guildId}/members/${discordUserId}`,
+    );
+
+    return result.data;
+  } catch (error) {
+    throw new Error(discordRoleErrorMessage(error));
+  }
 }
 
 async function sendToDiscord(application) {
@@ -141,6 +159,10 @@ export default async (request, context) => {
   try {
     const payload = await request.json();
     const answers = validateAnswers(payload.answers);
+
+    // يمنع تقديم شخص غير موجود داخل سيرفر الديسكورد،
+    // لأن إضافة الرول لا تعمل إلا على عضو موجود داخل السيرفر.
+    await ensureApplicantIsGuildMember(sessionUser.id);
 
     const application = {
       id: createApplicationId(),

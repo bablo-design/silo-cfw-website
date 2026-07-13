@@ -3,6 +3,124 @@ import { getStore } from "@netlify/blobs";
 export const DISCORD_API = "https://discord.com/api/v10";
 export const STORE_NAME = "silo-whitelist-applications";
 
+
+export class DiscordApiError extends Error {
+  constructor(message, status, code = null, responseData = null) {
+    super(message);
+    this.name = "DiscordApiError";
+    this.status = status;
+    this.code = code;
+    this.responseData = responseData;
+  }
+}
+
+export function getDiscordRoleConfig() {
+  const guildId = process.env.DISCORD_GUILD_ID?.trim();
+  const acceptedRoleId = process.env.DISCORD_ACCEPTED_ROLE_ID?.trim();
+  const rejectedRoleId = process.env.DISCORD_REJECTED_ROLE_ID?.trim();
+
+  if (!guildId || !acceptedRoleId || !rejectedRoleId) {
+    throw new Error(
+      "إعدادات رتب التفعيل غير مكتملة في Netlify. تأكد من DISCORD_GUILD_ID وDISCORD_ACCEPTED_ROLE_ID وDISCORD_REJECTED_ROLE_ID.",
+    );
+  }
+
+  if (acceptedRoleId === rejectedRoleId) {
+    throw new Error("رول القبول ورول الرفض لا يمكن أن يكونا نفس الرول.");
+  }
+
+  return {
+    guildId,
+    acceptedRoleId,
+    rejectedRoleId,
+  };
+}
+
+export async function discordBotRequest(
+  path,
+  {
+    method = "GET",
+    reason = null,
+    body = undefined,
+    headers: customHeaders = {},
+  } = {},
+) {
+  const botToken = process.env.DISCORD_BOT_TOKEN?.trim();
+
+  if (!botToken) {
+    throw new Error("DISCORD_BOT_TOKEN غير موجود داخل متغيرات Netlify.");
+  }
+
+  const headers = {
+    Authorization: `Bot ${botToken}`,
+    ...customHeaders,
+  };
+
+  if (reason) {
+    headers["X-Audit-Log-Reason"] = encodeURIComponent(reason).slice(0, 512);
+  }
+
+  const response = await fetch(`${DISCORD_API}${path}`, {
+    method,
+    headers,
+    body,
+  });
+
+  if (response.status === 204) {
+    return {
+      status: response.status,
+      data: null,
+    };
+  }
+
+  const text = await response.text();
+  let data = null;
+
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { message: text };
+    }
+  }
+
+  if (!response.ok) {
+    throw new DiscordApiError(
+      data?.message || `Discord API error (${response.status})`,
+      response.status,
+      data?.code ?? null,
+      data,
+    );
+  }
+
+  return {
+    status: response.status,
+    data,
+  };
+}
+
+export function discordRoleErrorMessage(error) {
+  if (error instanceof DiscordApiError) {
+    if (error.code === 10007 || error.status === 404) {
+      return "المتقدم مو موجود داخل سيرفر الديسكورد. لازم يدخل السيرفر أولاً.";
+    }
+
+    if (error.code === 10011) {
+      return "آيدي رول القبول أو الرفض غير صحيح.";
+    }
+
+    if (
+      error.code === 50013 ||
+      error.code === 50001 ||
+      error.status === 403
+    ) {
+      return "البوت ما عنده صلاحية Manage Roles، أو رتبة البوت مو أعلى من رول القبول والرفض.";
+    }
+  }
+
+  return error?.message || "تعذر تحديث رول المتقدم داخل الديسكورد.";
+}
+
 export function json(data, status = 200, extraHeaders = {}) {
   return Response.json(data, {
     status,
@@ -141,6 +259,22 @@ export function buildReviewEmbed(application, status = "pending", reviewer = nul
       inline: true,
     },
   ];
+
+  if (application.roleUpdate?.assignedRoleId) {
+    fields.push({
+      name: "الرول المضاف",
+      value: `<@&${cleanText(application.roleUpdate.assignedRoleId, 30)}>`,
+      inline: true,
+    });
+  }
+
+  if (application.roleUpdate?.removedRoleId) {
+    fields.push({
+      name: "الرول المحذوف",
+      value: `<@&${cleanText(application.roleUpdate.removedRoleId, 30)}>`,
+      inline: true,
+    });
+  }
 
   if (reviewer) {
     fields.push({
